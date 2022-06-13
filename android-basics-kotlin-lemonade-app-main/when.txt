@@ -1,0 +1,44 @@
+//if
+if(lemonadeState == SELECT){
+	lemonadeState = SQUEEZE
+	val tree: LemonTree = lemonTree
+	lemonSize = tree.pick()
+	squeezuCount = 0
+}
+else if(lemonadeState == SQUEEZE){
+	squeezeCount = squeezeCount+1
+	lemonSize = lemonSize-1
+	if(lemonSize==0){lemonadeState == DRINK}
+}
+else if(lemonadeState == DRINK){
+	squeezeCount = squeezeCount+1
+	lemonadeState = RESTART
+      lemonSize = -1
+}
+else{
+	lemonadeState = SELECT
+}
+
+//when
+ when(lemonadeState){
+            SELECT ->{
+                lemonadeState = SQUEEZE
+                val tree: LemonTree = lemonTree
+                lemonSize = tree.pick()
+                squeezeCount = 0
+            }
+            SQUEEZE ->{
+                squeezeCount +=1
+                lemonSize -=1
+                lemonadeState = if(lemonSize==0){
+                    DRINK
+                }else SQUEEZE
+            }
+            DRINK ->{
+                lemonadeState = RESTART
+                lemonSize = -1
+            }
+            RESTART ->{
+                lemonadeState = SELECT
+            }
+ }
